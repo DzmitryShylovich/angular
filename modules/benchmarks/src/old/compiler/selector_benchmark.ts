@@ -1,13 +1,12 @@
 /**
  * @license
- * Copyright Google Inc. All Rights Reserved.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
 
 import {CssSelector, SelectorMatcher} from '@angular/compiler/src/selector';
-import {Math} from '@angular/facade/lang';
 import {BrowserDomAdapter} from '@angular/platform-browser/src/browser/browser_adapter';
 import {bindAction, getIntParameter} from '@angular/testing/src/benchmark_util';
 
@@ -48,7 +47,9 @@ export function main() {
   function match() {
     let matchCount = 0;
     for (let i = 0; i < count; i++) {
-      fixedMatcher.match(fixedSelectors[i][0], (selector, selected) => { matchCount += selected; });
+      fixedMatcher.match(fixedSelectors[i][0], (selector, selected) => {
+        matchCount += selected;
+      });
     }
     return matchCount;
   }

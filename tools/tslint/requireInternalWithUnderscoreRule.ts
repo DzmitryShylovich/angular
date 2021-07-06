@@ -1,13 +1,13 @@
 /**
  * @license
- * Copyright Google Inc. All Rights Reserved.
+ * Copyright Google LLC All Rights Reserved.
  *
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
 
+import {RuleFailure} from 'tslint/lib';
 import {RuleWalker} from 'tslint/lib/language/walker';
-import {RuleFailure} from 'tslint/lib/lint';
 import {AbstractRule} from 'tslint/lib/rules';
 import * as ts from 'typescript';
 
@@ -35,9 +35,9 @@ class TypedefWalker extends RuleWalker {
     return comment.indexOf('@internal') >= 0;
   }
 
-  private assertInternalAnnotationPresent(node: ts.Declaration) {
-    if (node.name.getText().charAt(0) !== '_') return;
-    if (node.modifiers && node.modifiers.flags & ts.NodeFlags.Private) return;
+  private assertInternalAnnotationPresent(node: ts.NamedDeclaration) {
+    if (node.name && node.name.getText().charAt(0) !== '_') return;
+    if (ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Private) return;
 
     const ranges = ts.getLeadingCommentRanges(this.getSourceFile().text, node.pos);
     if (ranges) {
